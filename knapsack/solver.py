@@ -1,16 +1,19 @@
 from collections import namedtuple
 
-from algos import greedy_density
+from algos import greedy_density, dynamic_programming
 
 Item = namedtuple("Item", ['index', 'value', 'weight'])
 
 
 def solve_it(input_data):
     # parse the input
-    capacity, items = parse_input(input_data)
+    item_count, capacity, items = parse_input(input_data)
 
     # solve the problem
-    value, is_optimal, taken = greedy_density(capacity, items)
+    if item_count > 200:
+        value, is_optimal, taken = greedy_density(capacity, items)
+    else:
+        value, is_optimal, taken = dynamic_programming(capacity, items)
 
     # prepare and return the solution in the specified output format
     return prepare_output(value, is_optimal, taken)
@@ -30,7 +33,7 @@ def parse_input(input_data) -> tuple:
         parts = line.split()
         items.append(Item(i-1, int(parts[0]), int(parts[1])))
 
-    return capacity, items
+    return item_count, capacity, items
 
 
 def prepare_output(value, is_optimal, taken):
