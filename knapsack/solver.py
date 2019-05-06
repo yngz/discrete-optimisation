@@ -1,24 +1,19 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 from collections import namedtuple
 
-from algos import greedy_trivial
+from algos import greedy_density
 
 Item = namedtuple("Item", ['index', 'value', 'weight'])
 
 
 def solve_it(input_data):
-    # Modify this code to run your optimization algorithm
-
     # parse the input
     capacity, items = parse_input(input_data)
 
     # solve the problem
-    value, taken = greedy_trivial(capacity, items)
+    value, is_optimal, taken = greedy_density(capacity, items)
 
     # prepare and return the solution in the specified output format
-    return prepare_output(value, taken)
+    return prepare_output(value, is_optimal, taken)
 
 
 def parse_input(input_data) -> tuple:
@@ -38,8 +33,8 @@ def parse_input(input_data) -> tuple:
     return capacity, items
 
 
-def prepare_output(value, taken):
-    output_data = str(value) + ' ' + str(0) + '\n'
+def prepare_output(value, is_optimal, taken):
+    output_data = str(value) + ' ' + str(is_optimal) + '\n'
     output_data += ' '.join(map(str, taken))
     return output_data
 
